@@ -22,7 +22,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     ///Whether to show a map view
     ///The initial value is respected
-    var showMapView: Bool = true
+    var showMapView: Bool = false
     
     var centerMapOnUserLocation: Bool = true
     
@@ -32,6 +32,8 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     var displayDebugging = false
     
     var infoLabel = UILabel()
+    
+    var storyLabel = UILabel()
     
     var updateInfoLabelTimer: Timer?
     
@@ -59,7 +61,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
 //        sceneLocationView.orientToTrueNorth = false
         
 //        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
-        sceneLocationView.showAxesNode = true
+        sceneLocationView.showAxesNode = false
         sceneLocationView.locationDelegate = self
         
         if displayDebugging {
@@ -67,14 +69,14 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         }
         
         let pinCoordinate = CLLocationCoordinate2D(latitude: 43.6450378, longitude: -79.3884815)
-        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 236)
+        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 50)
 //        let pinImage = UIImage(named: "pin")!
         let pinText = "#HASHTAG1"
         let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
         
         let pinCoordinate2 = CLLocationCoordinate2D(latitude: 43.6529562, longitude: -79.4155688)
-        let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 236)
+        let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 150)
         //        let pinImage = UIImage(named: "pin")!
         let pinText2 = "#HASHTAG2"
         let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2)
@@ -123,6 +125,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             height: self.view.frame.size.height)
         
         infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 4)
+        
         
         if showMapView {
             infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
@@ -224,30 +227,28 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
-        if let touch = touches.first {
-            if touch.view != nil {
-                if (mapView == touch.view! ||
-                    mapView.recursiveSubviews().contains(touch.view!)) {
-                    centerMapOnUserLocation = false
-                } else {
-                    
-                    let location = touch.location(in: self.view)
-
-                    if location.x <= 40 && adjustNorthByTappingSidesOfScreen {
-                        print("left side of the screen")
-                        sceneLocationView.moveSceneHeadingAntiClockwise()
-                    } else if location.x >= view.frame.size.width - 40 && adjustNorthByTappingSidesOfScreen {
-                        print("right side of the screen")
-                        sceneLocationView.moveSceneHeadingClockwise()
-                    } else {
-                        let image = UIImage(named: "pin")!
-                        let annotationNode = LocationAnnotationNode(location: nil, image: image)
-                        annotationNode.scaleRelativeToDistance = true
-                        sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
-                    }
-                }
+        
+        let touch = touches.first
+        var initialTouchLocation = CGPoint()
+        initialTouchLocation = (touch?.location(in: sceneLocationView))!
+        
+        var hitTestOptions = [SCNHitTestOption: Any]()
+        let results: [SCNHitTestResult] = sceneLocationView.hitTest(initialTouchLocation, options: hitTestOptions)
+        for result in results {
+            print(result)
+//            if VirtualObject.isNodePartOfVirtualObject(result.node) {
+//                firstTouchWasOnObject = true
+//                break
+            print("something touched")
+            let labelContainerView = UIView(frame: CGRect(x: self.view.frame.size.width - 200, y: 50, width: 200, height: 50))
+            labelContainerView.backgroundColor = UIColor.white
+            storyLabel.text = "STORY LABEL"
+            storyLabel.sizeToFit()
+            storyLabel.textColor = UIColor.black
+            labelContainerView.addSubview(storyLabel)
+            sceneLocationView.addSubview(labelContainerView)
+            
             }
-        }
     }
     
     //MARK: MKMapViewDelegate
