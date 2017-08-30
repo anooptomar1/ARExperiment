@@ -92,16 +92,19 @@ open class LocationAnnotationNode: LocationNode {
     }
 }
 
-open class StoryAnnotationNode: LocationNode {
+ class StoryAnnotationNode: LocationNode {
     
+    public let text: String
     public let annotationNode: SCNNode
     public var scaleRelativeToDistance = false
     
     public init(location: CLLocation?,text: String) {
+        self.text = text
+        
         let blackMaterial = SCNMaterial()
         blackMaterial.diffuse.contents = UIColor.black
-        let label = SCNText(string: text, extrusionDepth: 0.5)
-        label.font = UIFont.systemFont(ofSize: CGFloat(3.0))
+        let label = SCNText(string: text, extrusionDepth: 0.1)
+        label.font = UIFont(name: "StagApp-Medium", size: 3.0)
         label.materials = [blackMaterial]
         
         annotationNode = SCNNode()

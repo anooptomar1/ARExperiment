@@ -32,29 +32,27 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     var displayDebugging = false
     
     var infoLabel = UILabel()
-    
-    var storyLabel = UILabel()
-    
+        
     var updateInfoLabelTimer: Timer?
     
     var adjustNorthByTappingSidesOfScreen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        infoLabel.font = UIFont.systemFont(ofSize: 10)
-        infoLabel.textAlignment = .left
-        infoLabel.textColor = UIColor.white
-        infoLabel.numberOfLines = 0
-        sceneLocationView.addSubview(infoLabel)
-        
-        // Update the label every 0.1
-        updateInfoLabelTimer = Timer.scheduledTimer(
-            timeInterval: 0.1,
-            target: self,
-            selector: #selector(ViewController.updateInfoLabel),
-            userInfo: nil,
-            repeats: true)
+//        
+//        infoLabel.font = UIFont.systemFont(ofSize: 10)
+//        infoLabel.textAlignment = .left
+//        infoLabel.textColor = UIColor.white
+//        infoLabel.numberOfLines = 0
+//        sceneLocationView.addSubview(infoLabel)
+//        
+//        // Update the label every 0.1
+//        updateInfoLabelTimer = Timer.scheduledTimer(
+//            timeInterval: 0.1,
+//            target: self,
+//            selector: #selector(ViewController.updateInfoLabel),
+//            userInfo: nil,
+//            repeats: true)
         
         //Set to true to display an arrow which points north.
         //Checkout the comments in the property description and on the readme on this.
@@ -71,14 +69,14 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         let pinCoordinate = CLLocationCoordinate2D(latitude: 43.6450378, longitude: -79.3884815)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 50)
 //        let pinImage = UIImage(named: "pin")!
-        let pinText = "#HASHTAG1"
+        let pinText = "#LostCat"
         let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
         
         let pinCoordinate2 = CLLocationCoordinate2D(latitude: 43.6529562, longitude: -79.4155688)
         let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 150)
         //        let pinImage = UIImage(named: "pin")!
-        let pinText2 = "#HASHTAG2"
+        let pinText2 = "#TorontoSchoolBus"
         let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode2)
         
@@ -237,18 +235,24 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         for result in results {
             print(result)
 //            if VirtualObject.isNodePartOfVirtualObject(result.node) {
-//                firstTouchWasOnObject = true
-//                break
+            //                firstTouchWasOnObject = true
+            //                break
             print("something touched")
-            let labelContainerView = UIView(frame: CGRect(x: self.view.frame.size.width - 200, y: 50, width: 200, height: 50))
-            labelContainerView.backgroundColor = UIColor.white
-            storyLabel.text = "STORY LABEL"
-            storyLabel.sizeToFit()
-            storyLabel.textColor = UIColor.black
-            labelContainerView.addSubview(storyLabel)
-            sceneLocationView.addSubview(labelContainerView)
             
-            }
+            let labelContainerView = Bundle.main.loadNibNamed("StoryView", owner: self, options: nil)?.first as? StoryView
+            labelContainerView?.frame = CGRect(x: 10, y: self.view.frame.height - 110, width: self.view.frame.width - 20, height: 100)
+            labelContainerView?.alpha = 0
+            labelContainerView?.storyImage.image = UIImage(named: "school-bus")
+            labelContainerView?.storyDate.text = "August 26, 2017"
+            labelContainerView?.storyLabel.text = "Toronto school boards flag potential school bus driver shortage 1 week before classes begin"
+            
+            UIView.animate(withDuration: 1.5, animations: {
+                labelContainerView?.alpha = 1.0
+            })
+            
+            sceneLocationView.addSubview(labelContainerView!)
+
+        }
     }
     
     //MARK: MKMapViewDelegate
