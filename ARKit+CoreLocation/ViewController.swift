@@ -22,7 +22,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     ///Whether to show a map view
     ///The initial value is respected
-    var showMapView: Bool = false
+    var showMapView: Bool = true
     
     var centerMapOnUserLocation: Bool = true
     
@@ -46,6 +46,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         infoLabel.numberOfLines = 0
         sceneLocationView.addSubview(infoLabel)
         
+        // Update the label every 0.1
         updateInfoLabelTimer = Timer.scheduledTimer(
             timeInterval: 0.1,
             target: self,
@@ -65,12 +66,20 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             sceneLocationView.showFeaturePoints = true
         }
         
-        //Currently set to Canary Wharf
-        let pinCoordinate = CLLocationCoordinate2D(latitude: 51.504607, longitude: -0.019592)
+        let pinCoordinate = CLLocationCoordinate2D(latitude: 43.6450378, longitude: -79.3884815)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 236)
-        let pinImage = UIImage(named: "pin")!
-        let pinLocationNode = LocationAnnotationNode(location: pinLocation, image: pinImage)
+//        let pinImage = UIImage(named: "pin")!
+        let pinText = "#HASHTAG1"
+        let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText)
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
+        
+        let pinCoordinate2 = CLLocationCoordinate2D(latitude: 43.6529562, longitude: -79.4155688)
+        let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 236)
+        //        let pinImage = UIImage(named: "pin")!
+        let pinText2 = "#HASHTAG2"
+        let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2)
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode2)
+        
         
         view.addSubview(sceneLocationView)
         

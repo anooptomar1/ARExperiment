@@ -91,3 +91,32 @@ open class LocationAnnotationNode: LocationNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+open class StoryAnnotationNode: LocationNode {
+    
+    public let annotationNode: SCNNode
+    public var scaleRelativeToDistance = false
+    
+    public init(location: CLLocation?,text: String) {
+        let blackMaterial = SCNMaterial()
+        blackMaterial.diffuse.contents = UIColor.black
+        let label = SCNText(string: text, extrusionDepth: 0.5)
+        label.font = UIFont.systemFont(ofSize: CGFloat(3.0))
+        label.materials = [blackMaterial]
+        
+        annotationNode = SCNNode()
+        annotationNode.geometry = label
+        
+        super.init(location: location)
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        constraints = [billboardConstraint]
+        
+        addChildNode(annotationNode)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
