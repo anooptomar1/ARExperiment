@@ -71,26 +71,33 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         let pinCoordinate = CLLocationCoordinate2D(latitude: 43.6450378, longitude: -79.3884815)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 50)
 //        let pinImage = UIImage(named: "pin")!
-        let pinText = "#LostCat"
-        let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText, deck: "Lost cat found on the tree", image: "catTree", date: "27 August 2017")
+        let pinText = "#HipsterCop"
+        let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText, deck: "Hipster Toronto police officer thinks dispensaries are overraided", image: "Hipster-Cop", date: "27 August 2017")
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
         
         let pinCoordinate2 = CLLocationCoordinate2D(latitude: 43.6529562, longitude: -79.4155688)
         let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 50)
-        //        let pinImage = UIImage(named: "pin")!
-        let pinText2 = "#TorontoSchoolBus"
-        let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2, deck: "Toronto school boards flag potential school bus driver shortage 1 week before classes begin", image: "school-bus", date: "15 May 2017")
+        let pinText2 = "#Apartments"
+        let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2, deck: "Couple has baby to get back at noisy neighbour", image: "Apartments", date: "15 May 2017")
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode2)
         
-        let pinCoordinate3 = CLLocationCoordinate2D(latitude: 43.713303, longitude: 79.394958)
+        let pinCoordinate3 = CLLocationCoordinate2D(latitude: 43.713303, longitude: -79.394958)
         let pinLocation3 = CLLocation(coordinate: pinCoordinate3, altitude: 50)
-        //        let pinImage = UIImage(named: "pin")!
-        let pinText3 = "#Shooting"
-        let pinLocationNode3 = StoryAnnotationNode(location: pinLocation3, text: pinText3, deck: "Shooting left man injured", image: "school-bus", date: "15 April 2017")
+        let pinText3 = "#Craiglist"
+        let pinLocationNode3 = StoryAnnotationNode(location: pinLocation3, text: pinText3, deck: "Man gravely misunderstands Craigslist ad offering 'one nightstand'", image: "Craiglist", date: "15 April 2017")
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode3)
         
+        let pinCoordinate4 = CLLocationCoordinate2D(latitude: 43.6373712, longitude: 79.427477)
+        let pinLocation4 = CLLocation(coordinate: pinCoordinate4, altitude: 50)
+        let pinText4 = "#InstagramKid"
+        let pinLocationNode4 = StoryAnnotationNode(location: pinLocation4, text: pinText4, deck: "Child sues parents for posting 'embarrassing' baby pictures on social media", image: "instagram-kid", date: "1 March 2017")
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode4)
         
-        
+        let pinCoordinate5 = CLLocationCoordinate2D(latitude: 43.6454625, longitude: -79.386103)
+        let pinLocation5 = CLLocation(coordinate: pinCoordinate5, altitude: 250)
+        let pinText5 = "#SharingIsCaring"
+        let pinLocationNode5 = StoryAnnotationNode(location: pinLocation5, text: pinText5, deck: "Man tries in vain to explain his nachos not for whole table",image: "nacho-sharing", date: "1 January 2017")
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode5)
         
         view.addSubview(sceneLocationView)
         
