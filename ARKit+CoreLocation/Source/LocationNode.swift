@@ -120,6 +120,15 @@ open class LocationAnnotationNode: LocationNode {
         let sphereNode = SCNNode()
         sphereNode.geometry = sphere
         sphereNode.position = SCNVector3Make(-2, 0, 0)
+        sphereNode.name = deck
+        
+        let touchSphere = SCNSphere(radius: 10.0)
+        touchSphere.firstMaterial?.transparency = 0.0
+        
+        let touchSphereNode = SCNNode()
+        touchSphereNode.geometry = touchSphere
+        touchSphereNode.position = SCNVector3Make(3, 0, 0)
+        touchSphereNode.name = deck
         
         
         super.init(location: location)
@@ -130,6 +139,7 @@ open class LocationAnnotationNode: LocationNode {
         
         addChildNode(annotationNode)
         addChildNode(sphereNode)
+        addChildNode(touchSphereNode)
         
         
     }
