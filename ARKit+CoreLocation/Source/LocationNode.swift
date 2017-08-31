@@ -98,13 +98,18 @@ open class LocationAnnotationNode: LocationNode {
     public let deck: String
     public let annotationNode: SCNNode
     public var scaleRelativeToDistance = false
+    public let image: String
+    public let date: String
     
-    public init(location: CLLocation?,text: String, deck: String) {
+    public init(location: CLLocation?,text: String, deck: String, image: String, date: String) {
         self.text = text
         self.deck = deck
+        self.image = image
+        self.date = date
         
         let blackMaterial = SCNMaterial()
         blackMaterial.diffuse.contents = UIColor.black
+                
         let label = SCNText(string: text, extrusionDepth: 0.1)
         label.font = UIFont(name: "StagApp-Medium", size: 3.0)
         label.materials = [blackMaterial]

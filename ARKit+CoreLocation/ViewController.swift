@@ -72,15 +72,24 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 50)
 //        let pinImage = UIImage(named: "pin")!
         let pinText = "#LostCat"
-        let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText, deck: "Lost cat found on the tree")
+        let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText, deck: "Lost cat found on the tree", image: "catTree", date: "27 August 2017")
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
         
         let pinCoordinate2 = CLLocationCoordinate2D(latitude: 43.6529562, longitude: -79.4155688)
         let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 50)
         //        let pinImage = UIImage(named: "pin")!
         let pinText2 = "#TorontoSchoolBus"
-        let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2, deck: "Toronto school boards flag potential school bus driver shortage 1 week before classes begin")
+        let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2, deck: "Toronto school boards flag potential school bus driver shortage 1 week before classes begin", image: "school-bus", date: "15 May 2017")
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode2)
+        
+        let pinCoordinate3 = CLLocationCoordinate2D(latitude: 43.713303, longitude: 79.394958)
+        let pinLocation3 = CLLocation(coordinate: pinCoordinate3, altitude: 50)
+        //        let pinImage = UIImage(named: "pin")!
+        let pinText3 = "#Shooting"
+        let pinLocationNode3 = StoryAnnotationNode(location: pinLocation3, text: pinText3, deck: "Shooting left man injured", image: "school-bus", date: "15 April 2017")
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode3)
+        
+        
         
         
         view.addSubview(sceneLocationView)
@@ -138,6 +147,10 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             y: self.view.frame.size.height / 2,
             width: self.view.frame.size.width,
             height: self.view.frame.size.height / 2)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.labelContainerView.removeFromSuperview()
     }
     
     override func didReceiveMemoryWarning() {
@@ -241,13 +254,12 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             //                firstTouchWasOnObject = true
             //                break
             print("something touched")
-            
+            let parentNode = result.node.parent as! StoryAnnotationNode
             self.labelContainerView = (Bundle.main.loadNibNamed("StoryView", owner: self, options: nil)?.first as? StoryView)!
             self.labelContainerView.frame = CGRect(x: 10, y: self.view.frame.height - 110, width: self.view.frame.width - 20, height: 100)
             self.labelContainerView.alpha = 0
-            self.labelContainerView.storyImage.image = UIImage(named: "school-bus")
-            self.labelContainerView.storyDate.text = "August 26, 2017"
-//            labelContainerView?.storyLabel.text = "Toronto school boards flag potential school bus driver shortage 1 week before classes begin"
+            self.labelContainerView.storyImage.image = UIImage(named: parentNode.image)
+            self.labelContainerView.storyDate.text = parentNode.date
             self.labelContainerView.storyLabel.text = result.node.name
             UIView.animate(withDuration: 1.5, animations: {
                 self.labelContainerView.alpha = 1.0
