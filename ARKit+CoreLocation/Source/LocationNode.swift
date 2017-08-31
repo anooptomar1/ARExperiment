@@ -95,11 +95,13 @@ open class LocationAnnotationNode: LocationNode {
  class StoryAnnotationNode: LocationNode {
     
     public let text: String
+    public let deck: String
     public let annotationNode: SCNNode
     public var scaleRelativeToDistance = false
     
-    public init(location: CLLocation?,text: String) {
+    public init(location: CLLocation?,text: String, deck: String) {
         self.text = text
+        self.deck = deck
         
         let blackMaterial = SCNMaterial()
         blackMaterial.diffuse.contents = UIColor.black
@@ -109,6 +111,16 @@ open class LocationAnnotationNode: LocationNode {
         
         annotationNode = SCNNode()
         annotationNode.geometry = label
+        annotationNode.name = deck
+        
+        let sphere = SCNSphere(radius: 1.20)
+        sphere.firstMaterial!.diffuse.contents = UIColor.red
+        sphere.firstMaterial!.specular.contents = UIColor.white
+        
+        let sphereNode = SCNNode()
+        sphereNode.geometry = sphere
+        sphereNode.position = SCNVector3Make(-2, 0, 0)
+        
         
         super.init(location: location)
         
@@ -117,6 +129,9 @@ open class LocationAnnotationNode: LocationNode {
         constraints = [billboardConstraint]
         
         addChildNode(annotationNode)
+        addChildNode(sphereNode)
+        
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {

@@ -35,6 +35,8 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         
     var updateInfoLabelTimer: Timer?
     
+    var labelContainerView = StoryView()
+    
     var adjustNorthByTappingSidesOfScreen = false
     
     override func viewDidLoad() {
@@ -70,14 +72,14 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 50)
 //        let pinImage = UIImage(named: "pin")!
         let pinText = "#LostCat"
-        let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText)
+        let pinLocationNode = StoryAnnotationNode(location: pinLocation, text: pinText, deck: "Lost cat found on the tree")
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
         
         let pinCoordinate2 = CLLocationCoordinate2D(latitude: 43.6529562, longitude: -79.4155688)
-        let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 150)
+        let pinLocation2 = CLLocation(coordinate: pinCoordinate2, altitude: 50)
         //        let pinImage = UIImage(named: "pin")!
         let pinText2 = "#TorontoSchoolBus"
-        let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2)
+        let pinLocationNode2 = StoryAnnotationNode(location: pinLocation2, text: pinText2, deck: "Toronto school boards flag potential school bus driver shortage 1 week before classes begin")
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode2)
         
         
@@ -225,6 +227,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
+        self.labelContainerView.removeFromSuperview()
         
         let touch = touches.first
         var initialTouchLocation = CGPoint()
@@ -239,18 +242,18 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             //                break
             print("something touched")
             
-            let labelContainerView = Bundle.main.loadNibNamed("StoryView", owner: self, options: nil)?.first as? StoryView
-            labelContainerView?.frame = CGRect(x: 10, y: self.view.frame.height - 110, width: self.view.frame.width - 20, height: 100)
-            labelContainerView?.alpha = 0
-            labelContainerView?.storyImage.image = UIImage(named: "school-bus")
-            labelContainerView?.storyDate.text = "August 26, 2017"
-            labelContainerView?.storyLabel.text = "Toronto school boards flag potential school bus driver shortage 1 week before classes begin"
-            
+            self.labelContainerView = (Bundle.main.loadNibNamed("StoryView", owner: self, options: nil)?.first as? StoryView)!
+            self.labelContainerView.frame = CGRect(x: 10, y: self.view.frame.height - 110, width: self.view.frame.width - 20, height: 100)
+            self.labelContainerView.alpha = 0
+            self.labelContainerView.storyImage.image = UIImage(named: "school-bus")
+            self.labelContainerView.storyDate.text = "August 26, 2017"
+//            labelContainerView?.storyLabel.text = "Toronto school boards flag potential school bus driver shortage 1 week before classes begin"
+            self.labelContainerView.storyLabel.text = result.node.name
             UIView.animate(withDuration: 1.5, animations: {
-                labelContainerView?.alpha = 1.0
+                self.labelContainerView.alpha = 1.0
             })
             
-            sceneLocationView.addSubview(labelContainerView!)
+            sceneLocationView.addSubview(self.labelContainerView)
 
         }
     }
