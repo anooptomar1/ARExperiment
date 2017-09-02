@@ -109,7 +109,10 @@ open class LocationAnnotationNode: LocationNode {
         
         let blackMaterial = SCNMaterial()
         blackMaterial.diffuse.contents = UIColor.black
-                
+        
+        let whiteMaterial = SCNMaterial()
+        whiteMaterial.diffuse.contents = UIColor.white
+        
         let label = SCNText(string: text, extrusionDepth: 0.1)
         label.font = UIFont(name: "StagApp-Medium", size: 3.0)
         label.materials = [blackMaterial]
@@ -118,13 +121,21 @@ open class LocationAnnotationNode: LocationNode {
         annotationNode.geometry = label
         annotationNode.name = deck
         
+        let plane = SCNPlane(width: 28, height: 5)
+        plane.materials = [whiteMaterial]
+        
+        let planeNode = SCNNode()
+        planeNode.geometry = plane
+        planeNode.position = SCNVector3Make(11, 2, -2)
+        planeNode.name = deck
+        
         let sphere = SCNSphere(radius: 1.20)
         sphere.firstMaterial!.diffuse.contents = UIColor.red
         sphere.firstMaterial!.specular.contents = UIColor.white
         
         let sphereNode = SCNNode()
         sphereNode.geometry = sphere
-        sphereNode.position = SCNVector3Make(-2, 0, 0)
+        sphereNode.position = SCNVector3Make(-5, 2, 0)
         sphereNode.name = deck
         
         let touchSphere = SCNSphere(radius: 10.0)
@@ -145,7 +156,7 @@ open class LocationAnnotationNode: LocationNode {
         addChildNode(annotationNode)
         addChildNode(sphereNode)
         addChildNode(touchSphereNode)
-        
+        addChildNode(planeNode)
         
     }
     

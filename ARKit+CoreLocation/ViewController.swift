@@ -68,7 +68,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             sceneLocationView.showFeaturePoints = true
         }
         
-        let pinCoordinate = CLLocationCoordinate2D(latitude: 43.6450378, longitude: -79.3884815)
+        let pinCoordinate = CLLocationCoordinate2D(latitude: 43.64655, longitude: -79.4445287)
         let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 50)
 //        let pinImage = UIImage(named: "pin")!
         let pinText = "#HipsterCop"
